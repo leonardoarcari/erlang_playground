@@ -9,16 +9,16 @@
 % Name is an atom, body is a comma separated list of
 % expressions.
 add(A, B) ->
-	A + B.
+    A + B.
 
 -define(sub(X, Y), add(X, -Y)).
 
 hello() ->
-	io:format("Hello, world!~n").
+    io:format("Hello, world!~n").
 
 greet_and_add_two(X) ->
-	hello(),
-	add(X, 2).
+    hello(),
+    add(X, 2).
 
 %% Greet people based on their gender
 %% We pattern match on the args instead of having big
@@ -30,11 +30,11 @@ greet_and_add_two(X) ->
 % function(_) ->
 % Expression.
 greet(male, Name) ->
-	io:format("Hello, Mr. ~s!", [Name]);
+    io:format("Hello, Mr. ~s!", [Name]);
 greet(female, Name) ->
-	io:format("Hello, Mrs. ~s!", [Name]);
+    io:format("Hello, Mrs. ~s!", [Name]);
 greet(_, Name) ->
-	io:format("Hello, ~s!", [Name]).
+    io:format("Hello, ~s!", [Name]).
 
 head([H|_]) -> H.
 second([_, X|_]) -> X.
@@ -53,10 +53,10 @@ same(_, _) -> false.
 % a tuple ({Y,M,D}) and the tuple as a whole (Date).
 % In Haskell this would be expressed with syntax: Date@(Y, M, D)
 valid_time({Date = {Y, M, D}, Time = {H, Min, S}}) ->
-	io:format("The Date tuple (~p) says today is: ~p/~p/~p,~n",[Date,Y,M,D]),
-	io:format("The time tuple (~p) indicates: ~p:~p:~p.~n", [Time,H,Min,S]);
+    io:format("The Date tuple (~p) says today is: ~p/~p/~p,~n",[Date,Y,M,D]),
+    io:format("The time tuple (~p) indicates: ~p:~p:~p.~n", [Time,H,Min,S]);
 valid_time(_) ->
-	io:format("Stop feeding me wrong data!~n").
+    io:format("Stop feeding me wrong data!~n").
 
 % Playing around with guards
 old_enough(X) when X >= 16 -> true;
@@ -79,39 +79,39 @@ wrong_age(_) -> false.
 % when Erlang can't find a way to have a guard succeed, 
 % it will crash: it cannot not return something.
 heh_fine() ->
-	if 1 =:= 1 -> works
-	end,
-	if 1 =:= 2; 1 =:= 1 -> works
-	end,
-	if 1 =:= 2, 1 =:= 1 -> fails
-	end.
+    if 1 =:= 1 -> works
+    end,
+    if 1 =:= 2; 1 =:= 1 -> works
+    end,
+    if 1 =:= 2, 1 =:= 1 -> fails
+    end.
 
 % Let's try again
 oh_god(N) ->
-	if N =:= 2 -> might_succeed;
-	   true -> always_does %% this is Erlang's
-	   					   %% 'else' branch
-	end.
+    if N =:= 2 -> might_succeed;
+       true -> always_does %% this is Erlang's
+                           %% 'else' branch
+    end.
 
 help_me(Animal) ->
-	Talk = if Animal == cat -> "meow";
-		      Animal == beef -> "mooo";
-		      Animal == dog -> "bark";
-		      Animal == tree -> "bark";
-		      true -> "fdkjwefkwg"
-		   end,
-	{Animal, "says " ++ Talk ++ "!"}.
+    Talk = if Animal == cat -> "meow";
+              Animal == beef -> "mooo";
+              Animal == dog -> "bark";
+              Animal == tree -> "bark";
+              true -> "fdkjwefkwg"
+           end,
+    {Animal, "says " ++ Talk ++ "!"}.
 
 beach(Temperature) ->
-	case Temperature of
-		{celsius, N} when N >= 20, N =< 45 ->
-			'favorable';
-		{kelvin, N} when N >= 293, N =< 318 ->
-			'scientifically favorable';
-		{fahrenheit, N} when N >= 68, N =< 113 ->
-			'favorable in the US';
-		_ -> 'avoid beach'
-	end.
+    case Temperature of
+        {celsius, N} when N >= 20, N =< 45 ->
+            'favorable';
+        {kelvin, N} when N >= 293, N =< 318 ->
+            'scientifically favorable';
+        {fahrenheit, N} when N >= 68, N =< 113 ->
+            'favorable in the US';
+        _ -> 'avoid beach'
+    end.
 
 %% Recursion
 fac(N) when N == 0 -> 1;
@@ -135,12 +135,12 @@ tail_len([_|T], Acc) -> tail_len(T, Acc+1).
 % create a list of as many copies of the term as specified
 % by the integer.
 duplicate(N, Term) ->
-	duplicate(N, Term, []).
+    duplicate(N, Term, []).
 % Helper tail-recursive implementation
 duplicate(0, _, Acc) ->
-	Acc;
+    Acc;
 duplicate(N, Term, Acc) when N > 0 ->
-	duplicate(N-1, Term, [Term|Acc]).
+    duplicate(N-1, Term, [Term|Acc]).
 
 % Reverse a list
 reverse(L) -> tail_reverse(L).
@@ -162,7 +162,7 @@ tail_sublist(L, N) -> reverse(tail_sublist(L, N, [])).
 tail_sublist(_, 0, Acc) -> Acc;
 tail_sublist([], _, Acc) -> Acc;
 tail_sublist([H|T], N, Acc) ->
-	tail_sublist(T, N-1, [H|Acc]).
+    tail_sublist(T, N-1, [H|Acc]).
 
 zip([], _) -> [];
 zip(_, []) -> [];
@@ -173,4 +173,4 @@ tail_zip(Xs, Ys) -> reverse(tail_zip(Xs, Ys, [])).
 tail_zip([], _, Acc) -> Acc;
 tail_zip(_, [], Acc) -> Acc;
 tail_zip([X|Xs], [Y|Ys], Acc) ->
-	tail_zip(Xs, Ys, [{X, Y}|Acc]).
+    tail_zip(Xs, Ys, [{X, Y}|Acc]).
